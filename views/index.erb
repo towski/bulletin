@@ -1,0 +1,70 @@
+<html>
+<head>
+<script src="prototype.js"></script>
+<script src="scriptaculous.js?load=effects,dragdrop"></script>
+<script src="main.js"></script>
+<script>
+  window.onload=function()
+  {
+    //bulletin = new Bulletin("climateculture", "11631-climate-culture", "196d23dfb3c45d680ccef8376a2636b5de28ca30")
+    bulletin = new Bulletin("entp", "10000-foobarbaz", "60ab9f71174a6e89c2ba751b6f52806d1422010a")
+  }
+  function moveItem(draggable,droparea){
+     if (!droparea.cleared) {
+        //droparea.innerHTML = '';
+        droparea.cleared = true;
+     }
+     var performMove = function(){ 
+       draggable.parentNode.removeChild(draggable)
+       draggable.setAttribute("style","")
+       droparea.appendChild(draggable)
+      }
+     new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})
+     //drag and drop tries to do something stupid, so I undo that
+     
+  }
+</script>
+<style>
+.ticket{
+	width:130px;
+	height:80px;
+	border:1px solid #aaa;
+	font-size:10px;
+	font-family:Verdana;
+	float:left;
+	padding:5px;
+	margin:5px;
+}
+
+.state{
+	width:20%;
+	float:left;
+	height:100%;
+}
+
+h6 {
+  margin:auto;
+  text-align:center
+}
+</style>
+</head>
+<body>
+<div id='bulletin' style='margin:auto'>
+<div id='new' class='state'>
+  <h6>new</h6>
+</div>
+<div id='open' class='state'>
+  <h6>open</h6>
+</div>
+<div id='verify' class='state'>
+  <h6>verify</h6>
+</div>
+<div id='staged' class='state'>
+  <h6>staged</h6>
+</div>
+<div id='resolved' class='state'>
+  <h6>resolved</h6>
+</div>
+<div id='invalid' class='state' style='display:none'>
+</div>
+</body>
