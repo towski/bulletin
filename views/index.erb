@@ -7,6 +7,18 @@
   Bulletin.lighthouse_domain = "<%= Lighthouse.domain_format % "" + (Lighthouse.port ? ":#{Lighthouse.port}" : "") %>"
   Bulletin.domain = "<%= $host %>"
   
+  window.onload = function(){
+    var form = $('setup')
+    form.onsubmit = function(){
+      var account = this.select('#account')[0].value;
+      var project = this.select('#project')[0].value;
+      var token   = this.select('#token')[0].value
+      var user    = this.select('#user')[0].value
+      bulletin = new Bulletin({account:account, project:project, token:token, user:user})
+      return false
+    }
+  }
+  
   function moveItem(draggable,droparea){
      if (!droparea.cleared) {
         //droparea.innerHTML = '';
@@ -25,11 +37,12 @@
 .ticket{
 	width:40%;
 	height:80px;
-	border:1px solid #aaa;
+	border-top:1px solid #aaa;
+	border-bottom:1px solid #aaa;
+	border-right:1px solid #aaa;
 	font-size:10px;
 	font-family:Verdana;
 	float:left;
-	padding:5px;
 	margin:5px;
 }
 
@@ -39,18 +52,53 @@
 	height:100%;
 }
 
+.assigned_user{
+	width:7%;
+	float:left;
+	height:100%;
+}
+
+.ticket_link{
+  float:right;
+  text-decoration:none;
+  margin-right:3px;
+}
+
+.ticket_body{
+	padding:5px;
+	margin-left: 8px;
+}
+
+.assigned_user0{ background:gray }
+.assigned_user1{ background:red }
+.assigned_user2{ background:green }
+.assigned_user3{ background:blue }
+.assigned_user4{ background:yellow }
+.assigned_user5{ background:purple }
+.assigned_user6{ background:orange }
+
 h6 {
   margin:auto;
-  text-align:center
+  text-align:center;
+  font-weight:normal;
 }
 </style>
 </head>
 <body>
-<form id='setup' onsubmit="bulletin = new Bulletin(this.select('#account')[0].value, this.select('#project')[0].value, this.select('#token')[0].value); return false;">
-  <input type='text' id='account' name='account' value="<%= params["account"] %>">.lighthouseapp.com/projects/
-  <input type='text' id='project' name='project' value="<%= params["project"] %>"><br/>
-  Token: <input type='text' id='token' name='token' value="<%= params["token"] %>"><br/>
-  <input type='submit' value='create bulletin'/>
+<form id='setup'>
+  <table>
+    <tr>
+      <td><input type='text' id='account' name='account' value="<%= params["account"] %>">.lighthouseapp.com/projects/</td>
+      <td><input type='text' id='project' name='project' value="<%= params["project"] %>"></td>
+    </tr>
+    <tr colspan=2>
+      <td>Token: <input type='text' id='token' name='token' value="<%= params["token"] %>"></td>
+    </tr>
+    <tr colspan=2> 
+      <td><input type='text' id='user' name='user' value="<%= params["user"] %>"></td>
+    </tr>
+    <tr><td><input type='submit' value='create bulletin'/></td></tr>
+  </table>
 </form>
 <div id='bulletin' style='margin:auto;display:none'>
   <div id='new' class='state'>

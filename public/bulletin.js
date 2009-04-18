@@ -1,17 +1,13 @@
 var Bulletin = Class.create({
-  apiURL: null,
-	ticketsURL: null,
   currentData: null,
-	project: null,
-	token: null,
-	account: null,
-	host: null,
+	assigned_user_hash: {},
 
-  initialize: function(account, project, token){
-		this.project = project
-		this.token = token
-		this.account = account
-		this.host = account + Bulletin.lighthouse_domain
+  initialize: function(options){
+		this.project = options.project
+		this.token = options.token
+		this.account = options.account
+		this.user = options.user
+		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
     this.getStates();
     this.getTickets();
@@ -32,8 +28,8 @@ var Bulletin = Class.create({
 			state = state_and_color[0]
 			var color = state_and_color[1]
 			if(color == undefined){ color = colors[state] }
-      var state_div = new Element('div', {id:state, class:'state'});
-		  state_div.update('<h6 style="color:#'+color+"\">"+state+"</h6>")
+      var state_div = new Element('div', {id:state, class:'state'});//, style:'background:'+color});
+		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
     project.closed_states.split("\n").each(function(state){
@@ -41,8 +37,8 @@ var Bulletin = Class.create({
 			state = state_and_color[0]
 			var color = state_and_color[1]
 			if(color == undefined){ color = colors[state] }
-      var state_div = new Element('div', {id:state, class:'state'});
-		  state_div.update('<h6 style="color:#'+color+"\">"+state+"</h6>")
+      var state_div = new Element('div', {id:state, class:'state'});//, style:'background:'+color});
+		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
 	  $A(["invalid","blocked","hold"]).each(function(state){
@@ -59,7 +55,7 @@ var Bulletin = Class.create({
   },
 
 	requestURL: function(number, state){
-    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + number + "/" + state
+    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + this.user + "/" + number + "/" + state
 	},
 
   handleResults: function(json){
@@ -73,11 +69,25 @@ var Bulletin = Class.create({
   },
 
 	build: function(tickets){
+		var index = 1;
+		assigned_user_hash = this.assigned_user_hash
+		assigned_user_hash[null] = 0;
+		assigned_user_hash[undefined] = 0;
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			var state = document.getElementById(ticket.state)
-			var ticketDiv = new Element('div', {'id':ticket.number,'class': ticket.state + " ticket",'title': ticket.body});
-			ticketDiv.update(ticket.title)
+			var ticketDiv = new Element('div', {id:ticket.number, class: ticket.state + " ticket", title: ticket.body});
+			var user_name = ticket.assigned_user_name;
+			if(assigned_user_hash[user_name] == undefined){
+				assigned_user_hash[user_name] = index++;
+			}
+			ticketDiv.appendChild(new Element('div', {title: ticket.assigned_user_name, class:"assigned_user assigned_user"+assigned_user_hash[user_name]}));
+			var number = new Element('a', {href:this.apiURL+"/tickets/"+ticket.number, class:'ticket_link', title:ticket.number})
+			number.update("#"+ticket.number)
+			ticketDiv.appendChild(number)
+			var title = new Element('div', {class:'ticket_body'})
+			title.update(ticket.title)
+			ticketDiv.appendChild(title)
 			state.appendChild(ticketDiv);
 		})
 		$$('.ticket').each(function(item){ new Draggable(item, {revert: false, ghosting: true})});
