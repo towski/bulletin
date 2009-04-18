@@ -3,7 +3,7 @@ require 'rubygems'
 gem 'sinatra'
 require 'sinatra'
 require 'lighthouse'
-
+raise ENV['APP_ENV'].to_s
 if ENV['APP_ENV'].to_s == "production"
   Lighthouse.domain_format = '%s.lighthouseapp.com'
   $host = "http://bulletin.heroku.com/"
