@@ -22,6 +22,7 @@ get '/' do
 end
 
 get '/:account/:token/:project_id/:number/:state' do
+  raise Lighthouse.domain_format % "entp"
   Lighthouse.account  = params.delete("account")
   Lighthouse.token    = params.delete("token")
 	ticket = Lighthouse::Ticket.new params
