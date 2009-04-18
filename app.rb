@@ -4,7 +4,7 @@ gem 'sinatra'
 require 'sinatra'
 require 'lighthouse'
 
-if ENV['APP_ENV'] == 'production'
+if ENV['APP_ENV'].to_s == "production"
   Lighthouse.domain_format = '%s.lighthouseapp.com'
   $host = "http://bulletin.heroku.com/"
 else 
@@ -22,7 +22,6 @@ get '/' do
 end
 
 get '/:account/:token/:project_id/:number/:state' do
-  raise Lighthouse.domain_format % "entp"
   Lighthouse.account  = params.delete("account")
   Lighthouse.token    = params.delete("token")
 	ticket = Lighthouse::Ticket.new params
