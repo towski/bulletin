@@ -20,8 +20,16 @@ var Bulletin = Class.create({
 		this.ticketsURL = this.apiURL + "tickets.json?callback=Bulletin." + this.callbackFunction;
 		this.ticketURL = this.apiURL + "tickets/"
     this.getTickets();
-		this.updateForm = document.getElementById('ticket-updater');
 	},
+	
+  <!-- getStates: function(){
+    this._scriptTag("http://climateculture.lighthouseapp.com/projects/11631.json?_token=196d23dfb3c45d680ccef8376a2636b5de28ca30&_method=put")
+  },
+  
+  buildStates: function(project){
+    project = project.project
+    
+  }, -->
 
   getTickets: function(){
     var requestURL = this.ticketsURL + "&q="+ escape("milestone:next") + "&_token=" + this.apiToken;
