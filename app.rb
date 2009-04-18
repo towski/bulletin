@@ -1,7 +1,7 @@
 require 'rubygems'
 gem 'sinatra'
 require 'sinatra'
-require 'lighthouse-api-1.0.0/lib/lighthouse'
+require 'vendor/lighthouse/lib/lighthouse'
 
 if ENV['APP_ENV'] == 'production'
   Lighthouse.domain_format = '%s.lighthouseapp.com'
