@@ -6,7 +6,6 @@ var Bulletin = Class.create({
 		this.project = options.project
 		this.token = options.token
 		this.account = options.account
-		this.user = options.user
 		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
     this.getStates();
@@ -23,24 +22,28 @@ var Bulletin = Class.create({
     project = project.project
     var main_div = document.getElementById('bulletin')
 		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
-    project.open_states.split("\n").each(function(state){
-			var state_and_color = state.match(/.*[^ ]/)[0].split("/")
-			state = state_and_color[0]
-			var color = state_and_color[1]
-			if(color == undefined){ color = colors[state] }
-      var state_div = new Element('div', {id:state, class:'state'});//, style:'background:'+color});
+		var open_states = project.open_states_list.split(",")
+		if(!open_states.include("new")){
+		  var state_div = new Element('div', {id:"new", class:'state'});
+		  state_div.update("<h6>new</h6>")
+		  main_div.appendChild(state_div);
+		}
+    open_states.each(function(state){
+      var state_div = new Element('div', {id:state, class:'state'});
+      state_div.update("<h6>"+state+"</h6>")
+      main_div.appendChild(state_div);
+    })
+		var closed_states = project.closed_states_list.split(",")
+    closed_states.each(function(state){
+      var state_div = new Element('div', {id:state, class:'state'});
 		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
-    project.closed_states.split("\n").each(function(state){
-			var state_and_color = state.match(/.*[^ ]/)[0].split("/")
-			state = state_and_color[0]
-			var color = state_and_color[1]
-			if(color == undefined){ color = colors[state] }
-      var state_div = new Element('div', {id:state, class:'state'});//, style:'background:'+color});
-		  state_div.update("<h6>"+state+"</h6>")
+		if(!open_states.include("resolved")){
+		  var state_div = new Element('div', {id:"resolved", class:'state', style:"color:#aaa"});
+		  state_div.update("<h6>resolved</h6>")
 		  main_div.appendChild(state_div);
-	  })
+		}
 	  $A(["invalid","blocked","hold"]).each(function(state){
 	    var state = $(state);
 	    if(state){ state.hide(); }
@@ -55,7 +58,7 @@ var Bulletin = Class.create({
   },
 
 	requestURL: function(number, state){
-    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + this.user + "/" + number + "/" + state
+    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + number + "/" + state
 	},
 
   handleResults: function(json){

@@ -18,7 +18,7 @@ get '/' do
 	erb :index
 end
 
-get '/:account/:token/:project_id/:assigned_user_id/:number/:state' do
+get '/:account/:token/:project_id/:number/:state' do
   Lighthouse.account  = params.delete("account")
   Lighthouse.token    = params.delete("token")
 	ticket = Lighthouse::Ticket.new params
