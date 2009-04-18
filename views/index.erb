@@ -4,6 +4,9 @@
 <script src="scriptaculous.js?load=effects,dragdrop"></script>
 <script src="main.js"></script>
 <script>
+  Bulletin.lighthouse_domain = "<%= Lighthouse.domain_format % "" + (Lighthouse.port ? ":#{Lighthouse.port}" : "") %>"
+  Bulletin.domain = "<%= $host %>"
+  
   function moveItem(draggable,droparea){
      if (!droparea.cleared) {
         //droparea.innerHTML = '';
@@ -11,17 +14,16 @@
      }
      var performMove = function(){ 
        draggable.parentNode.removeChild(draggable)
+       //drag and drop tries to do something stupid, so I undo that
        draggable.setAttribute("style","")
        droparea.appendChild(draggable)
       }
-     new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})
-     //drag and drop tries to do something stupid, so I undo that
-     
+     new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})     
   }
 </script>
 <style>
 .ticket{
-	width:130px;
+	width:40%;
 	height:80px;
 	border:1px solid #aaa;
 	font-size:10px;
@@ -32,7 +34,7 @@
 }
 
 .state{
-	width:16%;
+	width:20%;
 	float:left;
 	height:100%;
 }
@@ -51,24 +53,8 @@ h6 {
   <input type='submit' value='create bulletin'/>
 </form>
 <div id='bulletin' style='margin:auto;display:none'>
-<div id='new' class='state'>
-  <h6>new</h6>
-</div>
-<div id='open' class='state'>
-  <h6>open</h6>
-</div>
-<div id='verify' class='state'>
-  <h6>verify</h6>
-</div>
-<div id='staged' class='state'>
-  <h6>staged</h6>
-</div>
-<div id='reviewed' class='state'>
-  <h6>reviewed</h6>
-</div>
-<div id='resolved' class='state'>
-  <h6>resolved</h6>
-</div>
-<div id='invalid' class='state' style='display:none'>
+  <div id='new' class='state'>
+    <h6>new</h6>
+  </div>
 </div>
 </body>
