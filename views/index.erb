@@ -20,17 +20,21 @@
   }
   
   function moveItem(draggable,droparea){
-     if (!droparea.cleared) {
-        //droparea.innerHTML = '';
-        droparea.cleared = true;
-     }
-     var performMove = function(){ 
-       draggable.parentNode.removeChild(draggable)
-       //drag and drop tries to do something stupid, so I undo that
-       draggable.setAttribute("style","")
-       droparea.appendChild(draggable)
-      }
-     new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})     
+    if($(draggable.id).getAttribute("class").split(" ")[0] == droparea.id){
+      draggable.setAttribute("style","");
+      return;
+    }
+    if (!droparea.cleared) {
+       //droparea.innerHTML = '';
+       droparea.cleared = true;
+    }
+    var performMove = function(){ 
+      draggable.parentNode.removeChild(draggable)
+      //drag and drop tries to do something stupid, so I undo that
+      draggable.setAttribute("style","")
+      droparea.appendChild(draggable)
+    }
+    new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})     
   }
 </script>
 <style>
