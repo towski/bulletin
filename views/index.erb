@@ -45,9 +45,9 @@ h6 {
 </head>
 <body>
 <form id='setup' onsubmit="bulletin = new Bulletin(this.select('#account')[0].value, this.select('#project')[0].value, this.select('#token')[0].value); return false;">
-  <input type='text' id='account' name='account'>.lighthouseapp.com/projects/
-  <input type='text' id='project' name='project'><br/>
-  Token: <input type='text' id='token' name='token'><br/>
+  <input type='text' id='account' name='account' value="<%= params["account"] %>">.lighthouseapp.com/projects/
+  <input type='text' id='project' name='project' value="<%= params["project"] %>"><br/>
+  Token: <input type='text' id='token' name='token' value="<%= params["token"] %>"><br/>
   <input type='submit' value='create bulletin'/>
 </form>
 <div id='bulletin' style='margin:auto;display:none'>
