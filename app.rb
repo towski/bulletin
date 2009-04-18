@@ -14,10 +14,6 @@ else
   $host = "http://localhost:4567/"
 end
 
-get '/main.js' do
-  erb :main
-end
-
 get '/' do
 	erb :index
 end

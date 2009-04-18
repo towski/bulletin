@@ -26,14 +26,23 @@ var Bulletin = Class.create({
   buildStates: function(project){
     project = project.project
     var main_div = document.getElementById('bulletin')
-    project.open_states_list.split(",").each(function(state){
+		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
+    project.open_states.split("\n").each(function(state){
+			var state_and_color = state.match(/.*[^ ]/)[0].split("/")
+			state = state_and_color[0]
+			var color = state_and_color[1]
+			if(color == undefined){ color = colors[state] }
       var state_div = new Element('div', {id:state, class:'state'});
-		  state_div.update("<h6>"+state+"</h6>")
+		  state_div.update('<h6 style="color:#'+color+"\">"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
-    project.closed_states_list.split(",").each(function(state){
+    project.closed_states.split("\n").each(function(state){
+			var state_and_color = state.match(/.*[^ ]/)[0].split("/")
+			state = state_and_color[0]
+			var color = state_and_color[1]
+			if(color == undefined){ color = colors[state] }
       var state_div = new Element('div', {id:state, class:'state'});
-		  state_div.update("<h6>"+state+"</h6>")
+		  state_div.update('<h6 style="color:#'+color+"\">"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
 	  $A(["invalid","blocked","hold"]).each(function(state){

@@ -2,7 +2,7 @@
 <head>
 <script src="prototype.js"></script>
 <script src="scriptaculous.js?load=effects,dragdrop"></script>
-<script src="main.js"></script>
+<script src="bulletin.js"></script>
 <script>
   Bulletin.lighthouse_domain = "<%= Lighthouse.domain_format % "" + (Lighthouse.port ? ":#{Lighthouse.port}" : "") %>"
   Bulletin.domain = "<%= $host %>"
@@ -54,7 +54,7 @@ h6 {
 </form>
 <div id='bulletin' style='margin:auto;display:none'>
   <div id='new' class='state'>
-    <h6>new</h6>
+    <h6 style="color:f17">new</h6>
   </div>
 </div>
 </body>
