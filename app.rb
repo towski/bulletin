@@ -1,13 +1,22 @@
 require 'rubygems'
-gem 'sinatra', '~> 0.3.3'
+gem 'sinatra'
 require 'sinatra'
 require 'lighthouse-api-1.0.0/lib/lighthouse'
-Lighthouse.domain_format = '%s.local.i'
-Lighthouse.port          = '3001'
 
-# index
+if ENV['APP_ENV'] == 'production'
+  Lighthouse.domain_format = '%s.lighthouseapp.com'
+  $host = "http://bulletin.heroku.com/"
+else 
+  Lighthouse.domain_format = '%s.local.i'
+  Lighthouse.port          = '3001'
+  $host = "http://localhost:4567/"
+end
+
+get '/main.js' do
+  erb :main
+end
+
 get '/' do
-	#@projects = Project.all
 	erb :index
 end
 

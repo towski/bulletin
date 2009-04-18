@@ -12,9 +12,8 @@ var Bulletin = Class.create({
   initialize: function(hostName, projectId, apiToken){
 		this.projectId = projectId
 		this.apiToken = apiToken
-		//this.hostName = hostName + ".lighthouseapp.com"
 		this.account = hostName
-		this.hostName = hostName + ".local.i:3001"
+		this.hostName = hostName + "<%= Lighthouse.domain_format % "" + (Lighthouse.port ? ":#{Lighthouse.port}" : "") %>"
     this.callbackFunction = "response" + Math.ceil(Math.random()*10000);
     Bulletin[this.callbackFunction] = this.handleResults.bind(this);
 		this.apiURL = "http://" + this.hostName + "/projects/" + this.projectId + "/"
@@ -30,9 +29,7 @@ var Bulletin = Class.create({
   },
 
 	requestURL: function(ticketNumber, state){
-		var host = "http://localhost:4567/"
-		//var host = "http://bulletin.heroku.com/"
-		return host + this.account + "/" + this.apiToken + "/" + this.projectId + "/" + ticketNumber + "/" + state
+    return "<%= $host %>" + this.account + "/" + this.apiToken + "/" + this.projectId + "/" + ticketNumber + "/" + state
 	},
 
   handleResults: function(json){
@@ -58,6 +55,8 @@ var Bulletin = Class.create({
 		$$('.ticket').each(function(item){ new Draggable(item, {revert: false, ghosting: false})});
     $$('.state').each(function(item){ Droppables.add(item.id, {hoverclass: 'hoverActive', onDrop: moveItem})});
     $('bulletin').cleared = false;
+		$('setup').hide();
+		$('bulletin').show();
 	},
 
   _scriptTag: function(path){
