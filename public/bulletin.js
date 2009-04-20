@@ -22,33 +22,42 @@ var Bulletin = Class.create({
   buildStates: function(project){
     project = project.project
     var main_div = document.getElementById('bulletin')
+	  var title = new Element('h6', {'id':"new", 'class':'state'});
+		title.update(project.name + " current milestone")
+	  main_div.appendChild(title);
+		var state_divs = 0;
 		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
 		var open_states = project.open_states_list.split(",")
 		if(!open_states.include("new")){
 		  var state_div = new Element('div', {'id':"new", 'class':'state'});
 		  state_div.update("<h6>new</h6>")
 		  main_div.appendChild(state_div);
+			state_divs++;
 		}
     open_states.each(function(state){
       var state_div = new Element('div', {'id':state, 'class':'state'});
       state_div.update("<h6>"+state+"</h6>")
       main_div.appendChild(state_div);
+			state_divs++;
     })
 		var closed_states = project.closed_states_list.split(",")
     closed_states.each(function(state){
       var state_div = new Element('div', {'id':state, 'class':'state'});
 		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
+			state_divs++;
 	  })
 		if(!closed_states.include("resolved")){
 		  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
 		  state_div.update("<h6>resolved</h6>")
 		  main_div.appendChild(state_div);
+			state_divs++;
 		}
 	  $A(["invalid","blocked","hold"]).each(function(state){
 	    var state = $(state);
-	    if(state){ state.hide(); }
+	    if(state){ state.hide(); state_divs--; }
     });
+		$$('.state').each(function(state){ state.style.width = (100/state_divs) + "%" })
   },
 
   getTickets: function(){
