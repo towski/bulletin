@@ -21,7 +21,7 @@ var Bulletin = Class.create({
   
   buildStates: function(project){
     project = project.project
-    var main_div = document.getElementById('bulletin')
+    var main_div = $('bulletin')
 	  var title = new Element('h4', {'style':'margin:auto;width:200px; height:30px'});
 		title.update(project.name)
 	  main_div.appendChild(title);
@@ -98,7 +98,7 @@ var Bulletin = Class.create({
 		})
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
-			var state = document.getElementById(ticket.state)
+			var state = $(ticket.state)
 			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
 			if(assigned_user_hash[user_name] == undefined){
