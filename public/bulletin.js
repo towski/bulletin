@@ -74,10 +74,15 @@ var Bulletin = Class.create({
 	build: function(tickets){
 		var index = 1;
 		assigned_user_hash = this.assigned_user_hash
-		assigned_user_hash[null] = 0;
-		assigned_user_hash[undefined] = 0;
+		assigned_user_hash[""] = 0;
+		tickets.each(function(ticket){
+			ticket = ticket.ticket
+			if(!ticket.assigned_user_name){
+				ticket.assigned_user_name = ""
+			}
+		})
 		tickets.sort(function(x,y){
-			return x.ticket.assigned_user_name >= y.ticket.assigned_user_name;
+			return x.ticket.assigned_user_name <= y.ticket.assigned_user_name;
 		})
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
