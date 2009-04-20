@@ -82,9 +82,7 @@ var Bulletin = Class.create({
 			}
 		})
 		tickets.sort(function(x,y){
-			return x.ticket.assigned_user_name <= y.ticket.assigned_user_name;
-		})
-		tickets.sort(function(x,y){
+			alert(x.ticket.assigned_user_name + " vs. " + y.ticket.assigned_user_name + "=" + (x.ticket.assigned_user_name <= y.ticket.assigned_user_name))
 			return x.ticket.assigned_user_name <= y.ticket.assigned_user_name;
 		})
 		tickets.each(function(ticket){
