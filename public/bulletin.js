@@ -82,8 +82,9 @@ var Bulletin = Class.create({
 			}
 		})
 		tickets.sort(function(x,y){
-			alert(x.ticket.assigned_user_name + " vs. " + y.ticket.assigned_user_name + "=" + (x.ticket.assigned_user_name <= y.ticket.assigned_user_name))
-			return x.ticket.assigned_user_name <= y.ticket.assigned_user_name;
+			var name1 = x.ticket.assigned_user_name;
+			var name2 = y.ticket.assigned_user_name;
+			return ((name1 < name2) ? -1 : ((name1 > name2) ? 1 : 0));
 		})
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
@@ -101,7 +102,6 @@ var Bulletin = Class.create({
 			title.update(ticket.title)
 			ticketDiv.appendChild(title)
 			state.appendChild(ticketDiv);
-			alert(ticket.assigned_user_name)
 		})
 		$$('.ticket').each(function(item){ new Draggable(item, {revert: false, ghosting: true})});
     $$('.state').each(function(item){ Droppables.add(item.id, {hoverclass: 'hoverActive', onDrop: moveItem})});
