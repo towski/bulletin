@@ -22,7 +22,7 @@ var Bulletin = Class.create({
   buildStates: function(project){
     project = project.project
     var main_div = document.getElementById('bulletin')
-	  var title = new Element('h6', {'id':"new", 'class':'state'});
+	  var title = new Element('h4');
 		title.update(project.name + " current milestone")
 	  main_div.appendChild(title);
 		var state_divs = 0;
