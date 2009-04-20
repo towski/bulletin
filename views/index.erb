@@ -8,14 +8,21 @@
   Bulletin.domain = "<%= $host %>"
   
   window.onload = function(){
-    var form = $('setup')
-    form.onsubmit = function(){
-      var account = this.select('#account')[0].value;
-      var project = this.select('#project')[0].value;
-      var token   = this.select('#token')[0].value
-      var user    = this.select('#user')[0].value
+    var account = $('account').value;
+    var project = $('project').value;
+    var token   = $('token').value;
+    if(account != "" && project != "" && token != ""){
       bulletin = new Bulletin({account:account, project:project, token:token, user:user})
-      return false
+    }else{
+      var form = $('setup')
+      form.onsubmit = function(){
+        var account = $('account').value;
+        var project = $('project').value;
+        var token   = $('token').value;
+        var user    = $('user').value
+        bulletin = new Bulletin({account:account, project:project, token:token, user:user})
+        return false
+      }
     }
   }
   
@@ -92,7 +99,7 @@ h6 {
 </style>
 </head>
 <body>
-<form id='setup'>
+<form id='setup' style='margin:auto;display:none'>
   <table>
     <tr>
       <td><input type='text' id='account' name='account' value="<%= params["account"] %>">.lighthouseapp.com/projects/</td>
