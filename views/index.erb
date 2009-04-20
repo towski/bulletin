@@ -15,6 +15,7 @@
       bulletin = new Bulletin({account:account, project:project, token:token, user:user})
     }else{
       var form = $('setup')
+      form.show()
       form.onsubmit = function(){
         var account = $('account').value;
         var project = $('project').value;
