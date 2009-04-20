@@ -100,6 +100,7 @@ var Bulletin = Class.create({
 			title.update(ticket.title)
 			ticketDiv.appendChild(title)
 			state.appendChild(ticketDiv);
+			alert(ticket.assigned_user_name)
 		})
 		$$('.ticket').each(function(item){ new Draggable(item, {revert: false, ghosting: true})});
     $$('.state').each(function(item){ Droppables.add(item.id, {hoverclass: 'hoverActive', onDrop: moveItem})});
