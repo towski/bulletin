@@ -41,18 +41,18 @@ var Bulletin = Class.create({
 			state_divs++;
     })
 		var closed_states = project.closed_states_list.split(",")
+		var resolved_index = closed_states.indexOf("resolved")
+		if(resolved_index != -1){ closed_states.splice(resolved_index, 1) }
     closed_states.each(function(state){
       var state_div = new Element('div', {'id':state, 'class':'state'});
 		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 			state_divs++;
 	  })
-		if(!closed_states.include("resolved")){
-		  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
-		  state_div.update("<h6>resolved</h6>")
-		  main_div.appendChild(state_div);
-			state_divs++;
-		}
+	  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
+	  state_div.update("<h6>resolved</h6>")
+	  main_div.appendChild(state_div);
+		state_divs++;
 	  $A(["invalid","blocked","hold"]).each(function(state){
 	    var state = $(state);
 	    if(state){ state.hide(); state_divs--; }
