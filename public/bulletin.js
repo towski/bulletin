@@ -24,23 +24,23 @@ var Bulletin = Class.create({
 		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
 		var open_states = project.open_states_list.split(",")
 		if(!open_states.include("new")){
-		  var state_div = new Element('div', {id:"new", class:'state'});
+		  var state_div = new Element('div', {'id':"new", 'class':'state'});
 		  state_div.update("<h6>new</h6>")
 		  main_div.appendChild(state_div);
 		}
     open_states.each(function(state){
-      var state_div = new Element('div', {id:state, class:'state'});
+      var state_div = new Element('div', {'id':state, 'class':'state'});
       state_div.update("<h6>"+state+"</h6>")
       main_div.appendChild(state_div);
     })
 		var closed_states = project.closed_states_list.split(",")
     closed_states.each(function(state){
-      var state_div = new Element('div', {id:state, class:'state'});
+      var state_div = new Element('div', {'id':state, 'class':'state'});
 		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
 		if(!open_states.include("resolved")){
-		  var state_div = new Element('div', {id:"resolved", class:'state', style:"color:#aaa"});
+		  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
 		  state_div.update("<h6>resolved</h6>")
 		  main_div.appendChild(state_div);
 		}
@@ -79,16 +79,16 @@ var Bulletin = Class.create({
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			var state = document.getElementById(ticket.state)
-			var ticketDiv = new Element('div', {id:ticket.number, class: ticket.state + " ticket", title: ticket.body});
+			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
 			if(assigned_user_hash[user_name] == undefined){
 				assigned_user_hash[user_name] = index++;
 			}
-			ticketDiv.appendChild(new Element('div', {title: ticket.assigned_user_name, class:"assigned_user assigned_user"+assigned_user_hash[user_name]}));
-			var number = new Element('a', {href:this.apiURL+"/tickets/"+ticket.number, class:'ticket_link', title:ticket.number})
+			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user assigned_user"+assigned_user_hash[user_name]}));
+			var number = new Element('a', {'href':this.apiURL+"/tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number})
 			number.update("#"+ticket.number)
 			ticketDiv.appendChild(number)
-			var title = new Element('div', {class:'ticket_body'})
+			var title = new Element('div', {'class':'ticket_body'})
 			title.update(ticket.title)
 			ticketDiv.appendChild(title)
 			state.appendChild(ticketDiv);
