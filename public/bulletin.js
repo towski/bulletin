@@ -39,7 +39,7 @@ var Bulletin = Class.create({
 		  state_div.update("<h6>"+state+"</h6>")
 		  main_div.appendChild(state_div);
 	  })
-		if(!open_states.include("resolved")){
+		if(!closed_states.include("resolved")){
 		  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
 		  state_div.update("<h6>resolved</h6>")
 		  main_div.appendChild(state_div);
