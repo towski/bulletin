@@ -49,7 +49,7 @@ var Bulletin = Class.create({
 		  main_div.appendChild(state_div);
 			state_divs++;
 	  })
-	  var state_div = new Element('div', {'id':"resolved", 'class':'state', 'style':"color:#aaa"});
+	  var state_div = new Element('div', {'id':"resolved", 'class':'state'});
 	  state_div.update("<h6>resolved</h6>")
 	  main_div.appendChild(state_div);
 		state_divs++;
