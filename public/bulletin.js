@@ -22,8 +22,8 @@ var Bulletin = Class.create({
   buildStates: function(project){
     project = project.project
     var main_div = document.getElementById('bulletin')
-	  var title = new Element('h4');
-		title.update(project.name + " current milestone")
+	  var title = new Element('h4', {'style':'margin:auto');
+		title.update(project.name + " Current Milestone")
 	  main_div.appendChild(title);
 		var state_divs = 0;
 		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
