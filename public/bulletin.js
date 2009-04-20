@@ -8,6 +8,7 @@ var Bulletin = Class.create({
 		this.account = options.account
 		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
+		Bulletin.apiURL = this.apiURL
     this.getStates();
     this.getTickets();
 	},
@@ -95,7 +96,7 @@ var Bulletin = Class.create({
 				assigned_user_hash[user_name] = index++;
 			}
 			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user assigned_user"+assigned_user_hash[user_name]}));
-			var number = new Element('a', {'href':this.apiURL+"/tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number})
+			var number = new Element('a', {'href':Bulletin.apiURL+"/tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number, 'target':'_blank'})
 			number.update("#"+ticket.number)
 			ticketDiv.appendChild(number)
 			var title = new Element('div', {'class':'ticket_body'})
