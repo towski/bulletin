@@ -82,8 +82,8 @@ var Bulletin = Class.create({
 			}
 		})
 		tickets.sort(function(x,y){
-			var name1 = x.ticket.assigned_user_name;
-			var name2 = y.ticket.assigned_user_name;
+			var name1 = x.ticket.assigned_user_name.toLowerCase();
+			var name2 = y.ticket.assigned_user_name.toLowerCase();
 			return ((name1 < name2) ? -1 : ((name1 > name2) ? 1 : 0));
 		})
 		tickets.each(function(ticket){
