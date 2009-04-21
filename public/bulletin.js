@@ -68,6 +68,7 @@ var Bulletin = Class.create({
   },
 
 	buildAvatars: function(memberships){
+		memberships = memberships.memberships
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
 			membership = membership.membership
