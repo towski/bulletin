@@ -42,7 +42,7 @@
       draggable.setAttribute("style","")
       droparea.appendChild(draggable)
     }
-    new Ajax.Request(bulletin.requestURL(draggable.id, droparea.id), {method: 'get', onSuccess: performMove})     
+    new Ajax.Request(bulletin.requestURL(draggable, droparea.id), {method: 'get', onSuccess: performMove})     
   }
 </script>
 <style>

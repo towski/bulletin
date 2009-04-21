@@ -9,6 +9,7 @@ var Bulletin = Class.create({
 		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
 		Bulletin.apiURL = this.apiURL
+		this.getMemberships();
     this.getStates();
     this.getTickets();
 	},
@@ -60,16 +61,36 @@ var Bulletin = Class.create({
 		$$('.state').each(function(state){ state.style.width = (100/state_divs) + "%" })
   },
 
+  getMemberships: function(){
+    var callbackFunction = "response" + Math.ceil(Math.random()*10000);
+    Bulletin[callbackFunction] = this.buildAvatars.bind(this);
+    this._scriptTag("http://"+this.host+"/projects/"+this.project+"/memberships.json?_token="+this.token+"&_method=put&callback=Bulletin."+callbackFunction)
+  },
+
+	buildAvatars: function(memberships){
+		var avatarBar = $('avatarBar')
+		memberships.each(function(membership){
+			membership = membership.membership
+			var avatar = new Element('span')
+			avatar.update(membership.user_id)
+			avatarBar.appendChild(avatar)
+		}
+	},
+
+	requestURL: function(ticket_div, state){
+		var old_state = ticket_div.className.match(/[^ ]*/)[0]
+    // if($('user') != "" && old_state == "new"){
+    //   
+    // }
+    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + ticket_div.id + "/" + state
+	},
+
   getTickets: function(){
     var callbackFunction = "response" + Math.ceil(Math.random()*10000);
     Bulletin[callbackFunction] = this.handleResults.bind(this);
     var ticketsURL = this.apiURL + "tickets.json?callback=Bulletin." + callbackFunction;
     this._scriptTag(ticketsURL + "&q="+ escape("milestone:next") + "&_token=" + this.token)
   },
-
-	requestURL: function(number, state){
-    return Bulletin.domain + this.account + "/" + this.token + "/" + this.project + "/" + number + "/" + state
-	},
 
   handleResults: function(json){
     if (json.tickets != null){
