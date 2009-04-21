@@ -88,6 +88,7 @@ var Bulletin = Class.create({
   },
 
 	build: function(tickets){
+				alert("ticks")
 		var assigned_user_hash = this.assigned_user_hash
 		var index = 1;
 		assigned_user_hash[""] = "fff";
@@ -137,6 +138,7 @@ var Bulletin = Class.create({
 		memberships = memberships.memberships
 		var alreadyListed = {};
 		var avatarBar = $('avatarBar')
+		alert("avs")
 		memberships.each(function(membership){
 			membership = membership.membership
 			alert(Bulletin.assigned_user_hash[membership.user.name])
