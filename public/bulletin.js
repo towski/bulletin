@@ -70,10 +70,16 @@ var Bulletin = Class.create({
 	buildAvatars: function(memberships){
 		memberships = memberships.memberships
 		var avatarBar = $('avatarBar')
+		var assigned_user_hash = this.assigned_user_hash
+		var index = 1;
+		assigned_user_hash[""] = 0;
 		memberships.each(function(membership){
 			membership = membership.membership
+			if(assigned_user_hash[membership.name] == undefined){
+				assigned_user_hash[membership.name] = index++;
+			}
 			var avatar = new Element('span')
-			avatar.update(membership.user_id)
+			avatar.update(membership.user_id + ":" + "<img src='1'/>")
 			avatarBar.appendChild(avatar)
 		})
 	},
@@ -104,9 +110,7 @@ var Bulletin = Class.create({
   },
 
 	build: function(tickets){
-		var index = 1;
-		assigned_user_hash = this.assigned_user_hash
-		assigned_user_hash[""] = 0;
+		var assigned_user_hash = this.assigned_user_hash
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			if(!ticket.assigned_user_name){
@@ -123,9 +127,6 @@ var Bulletin = Class.create({
 			var state = $(ticket.state)
 			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
-			if(assigned_user_hash[user_name] == undefined){
-				assigned_user_hash[user_name] = index++;
-			}
 			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user assigned_user"+assigned_user_hash[user_name]}));
 			var number = new Element('a', {'href':Bulletin.apiURL+"tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number, 'target':'_blank'})
 			number.update("#"+ticket.number)
