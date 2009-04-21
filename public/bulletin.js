@@ -9,6 +9,7 @@ var Bulletin = Class.create({
 		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
 		Bulletin.apiURL = this.apiURL
+		Bulletin.assigned_user_hash = this.assigned_user_hash
     this.getStates();
     this.getTickets();
 		this.getMemberships();
@@ -136,7 +137,7 @@ var Bulletin = Class.create({
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
 			membership = membership.membership
-			if(this.assigned_user_hash[membership.user.name]){
+			if(Bulletin.assigned_user_hash[membership.user.name]){
 				var avatar = new Element('span')
 				avatar.update(membership.user_id + ":" + "<img src='"+membership.user.avatar_url+"'/>")
 				avatarBar.appendChild(avatar)
