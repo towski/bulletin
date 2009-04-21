@@ -109,7 +109,7 @@ var Bulletin = Class.create({
 			var state = $(ticket.state)
 			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
-			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user assigned_user"+assigned_user_hash[user_name]}));
+			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user", 'style':'background:#'+hex_md5(ticket.assigned_user_name).substr(26,6)}));
 			var number = new Element('a', {'href':Bulletin.apiURL+"tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number, 'target':'_blank'})
 			number.update("#"+ticket.number)
 			ticketDiv.appendChild(number)
