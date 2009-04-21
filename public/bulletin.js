@@ -11,8 +11,6 @@ var Bulletin = Class.create({
 		Bulletin.apiURL = this.apiURL
 		Bulletin.assigned_user_hash = this.assigned_user_hash
     this.getStates();
-    this.getTickets();
-		this.getMemberships();
 	},
 	
   getStates: function(){
@@ -60,6 +58,7 @@ var Bulletin = Class.create({
 	    if(state){ state.hide(); state_divs--; }
     });
 		$$('.state').each(function(state){ state.style.width = (100/state_divs) + "%" })
+		this.getTickets();
   },
 
 	requestURL: function(ticket_div, state){
@@ -88,7 +87,6 @@ var Bulletin = Class.create({
   },
 
 	build: function(tickets){
-				alert("ticks")
 		var assigned_user_hash = this.assigned_user_hash
 		var index = 1;
 		assigned_user_hash[""] = "fff";
@@ -125,7 +123,7 @@ var Bulletin = Class.create({
     $('bulletin').cleared = false;
 		$('setup').hide();
 		$('bulletin').show();
-		Bulletin.assigned_user_hash = assigned_user_hash
+		this.getMemberships();
 	},
 	
 	getMemberships: function(){
@@ -138,7 +136,6 @@ var Bulletin = Class.create({
 		memberships = memberships.memberships
 		var alreadyListed = {};
 		var avatarBar = $('avatarBar')
-		alert("avs")
 		memberships.each(function(membership){
 			membership = membership.membership
 			alert(Bulletin.assigned_user_hash[membership.user.name])
