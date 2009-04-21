@@ -139,7 +139,7 @@ var Bulletin = Class.create({
 		memberships.each(function(membership){
 			membership = membership.membership
 			if(Bulletin.assigned_user_hash[membership.user.name] && !alreadyListed[membership.user.name]){
-				var avatar = new Element('div', {'class':'float:left', 'style':'width:80'})
+				var avatar = new Element('span', {'class':'float:left', 'style':'width:80px'})
 				avatar.update("<img src='http://entp.lighthouseapp.com/"+membership.user.avatar_url+"' title='"+membership.user.name+"' style='float:left'/>" + ":" + "<div style='width:10px;height:10px;float:left;background:#"+Bulletin.assigned_user_hash[membership.user.name]+"'></div>")
 				avatarBar.appendChild(avatar)
 				alreadyListed[membership.user.name] = true
