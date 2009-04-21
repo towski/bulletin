@@ -30,7 +30,7 @@ var Bulletin = Class.create({
 		var state_divs = 0;
 		var colors = {open:"aaa", blocked:"a00", verify:"099", resolved:"6A0", staged:"ada"}
 		var open_states = project.open_states_list.split(",")
-		var new_index = open_states.indexOf("resolved")
+		var new_index = open_states.indexOf("new")
 		if(new_index != -1){ open_states.splice(new_index, 1) }
 		var state_div = new Element('div', {'id':"new", 'class':'state','style':'clear:both'});
 		state_div.update("<h6>new</h6>")
