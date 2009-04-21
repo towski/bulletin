@@ -9,9 +9,9 @@ var Bulletin = Class.create({
 		this.host = options.account + Bulletin.lighthouse_domain
 		this.apiURL = "http://" + this.host + "/projects/" + this.project + "/"
 		Bulletin.apiURL = this.apiURL
-		this.getMemberships();
     this.getStates();
     this.getTickets();
+		this.getMemberships();
 	},
 	
   getStates: function(){
@@ -61,29 +61,6 @@ var Bulletin = Class.create({
 		$$('.state').each(function(state){ state.style.width = (100/state_divs) + "%" })
   },
 
-  getMemberships: function(){
-    var callbackFunction = "response" + Math.ceil(Math.random()*10000);
-    Bulletin[callbackFunction] = this.buildAvatars.bind(this);
-    this._scriptTag("http://"+this.host+"/projects/"+this.project+"/memberships.json?_token="+this.token+"&_method=put&callback=Bulletin."+callbackFunction)
-  },
-
-	buildAvatars: function(memberships){
-		memberships = memberships.memberships
-		var avatarBar = $('avatarBar')
-		var assigned_user_hash = this.assigned_user_hash
-		var index = 1;
-		assigned_user_hash[""] = 0;
-		memberships.each(function(membership){
-			membership = membership.membership
-			if(assigned_user_hash[membership.name] == undefined){
-				assigned_user_hash[membership.name] = index++;
-			}
-			var avatar = new Element('span')
-			avatar.update(membership.user_id + ":" + "<img src='1'/>")
-			avatarBar.appendChild(avatar)
-		})
-	},
-
 	requestURL: function(ticket_div, state){
 		var old_state = ticket_div.className.match(/[^ ]*/)[0]
     // if($('user') != "" && old_state == "new"){
@@ -111,6 +88,8 @@ var Bulletin = Class.create({
 
 	build: function(tickets){
 		var assigned_user_hash = this.assigned_user_hash
+		var index = 1;
+		assigned_user_hash[""] = 0;
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			if(!ticket.assigned_user_name){
@@ -124,6 +103,9 @@ var Bulletin = Class.create({
 		})
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
+			if(assigned_user_hash[ticket.assigned_user_name] == undefined){
+				assigned_user_hash[ticket.assigned_user_name] = index++;
+			}
 			var state = $(ticket.state)
 			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
@@ -141,6 +123,25 @@ var Bulletin = Class.create({
     $('bulletin').cleared = false;
 		$('setup').hide();
 		$('bulletin').show();
+	},
+	
+	getMemberships: function(){
+    var callbackFunction = "response" + Math.ceil(Math.random()*10000);
+    Bulletin[callbackFunction] = this.buildAvatars.bind(this);
+    this._scriptTag("http://"+this.host+"/projects/"+this.project+"/memberships.json?_token="+this.token+"&_method=put&callback=Bulletin."+callbackFunction)
+  },
+
+	buildAvatars: function(memberships){
+		memberships = memberships.memberships
+		var avatarBar = $('avatarBar')
+		memberships.each(function(membership){
+			if(this.assigned_user_hash[membership.name]){
+				membership = membership.membership
+				var avatar = new Element('span')
+				avatar.update(membership.user_id + ":" + "<img src='1'/>")
+				avatarBar.appendChild(avatar)
+			}
+		})
 	},
 
   _scriptTag: function(path){
