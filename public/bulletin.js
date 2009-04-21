@@ -74,7 +74,7 @@ var Bulletin = Class.create({
 			var avatar = new Element('span')
 			avatar.update(membership.user_id)
 			avatarBar.appendChild(avatar)
-		}
+		})
 	},
 
 	requestURL: function(ticket_div, state){
