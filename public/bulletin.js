@@ -132,6 +132,7 @@ var Bulletin = Class.create({
   },
 
 	buildAvatars: function(memberships){
+		globaldata = memberships
 		memberships = memberships.memberships
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
