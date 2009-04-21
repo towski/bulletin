@@ -139,7 +139,7 @@ var Bulletin = Class.create({
 			membership = membership.membership
 			if(Bulletin.assigned_user_hash[membership.user.name]){
 				var avatar = new Element('span')
-				avatar.update(membership.user_id + ":" + "<img src='"+membership.user.avatar_url+"'/>")
+				avatar.update("<img src='"+membership.user.avatar_url+"' title='"+membership.user.name+"'/>" + ":" + "<div style='width:10px;height:10px;background:#"+Bulletin.assigned_user_hash[membership.user.name]+"'></div>")
 				avatarBar.appendChild(avatar)
 			}
 		})
