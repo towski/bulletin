@@ -138,8 +138,8 @@ var Bulletin = Class.create({
 		memberships.each(function(membership){
 			membership = membership.membership
 			if(Bulletin.assigned_user_hash[membership.user.name]){
-				var avatar = new Element('span')
-				avatar.update("<img src='http://entp.lighthouseapp.com/"+membership.user.avatar_url+"' title='"+membership.user.name+"' style='display:inline'/>" + ":" + "<div style='width:10px;height:10px;background:#"+Bulletin.assigned_user_hash[membership.user.name]+"'></div>")
+				var avatar = new Element('span', {'class':'float:left'})
+				avatar.update("<img src='http://entp.lighthouseapp.com/"+membership.user.avatar_url+"' title='"+membership.user.name+"' style='float:left'/>" + ":" + "<div style='width:10px;height:10px;float:left;background:#"+Bulletin.assigned_user_hash[membership.user.name]+"'></div>")
 				avatarBar.appendChild(avatar)
 			}
 		})
