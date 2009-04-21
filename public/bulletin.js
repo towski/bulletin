@@ -89,7 +89,7 @@ var Bulletin = Class.create({
 	build: function(tickets){
 		var assigned_user_hash = this.assigned_user_hash
 		var index = 1;
-		assigned_user_hash[""] = 0;
+		assigned_user_hash[""] = "000";
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			if(!ticket.assigned_user_name){
@@ -104,12 +104,12 @@ var Bulletin = Class.create({
 		tickets.each(function(ticket){
 			ticket = ticket.ticket
 			if(assigned_user_hash[ticket.assigned_user_name] == undefined){
-				assigned_user_hash[ticket.assigned_user_name] = index++;
+				assigned_user_hash[ticket.assigned_user_name] = hex_md5(ticket.assigned_user_name).substr(26,6);
 			}
 			var state = $(ticket.state)
 			var ticketDiv = new Element('div', {'id':ticket.number, 'class': ticket.state + " ticket", 'title': ticket.body});
 			var user_name = ticket.assigned_user_name;
-			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user", 'style':'background:#'+hex_md5(ticket.assigned_user_name).substr(26,6)}));
+			ticketDiv.appendChild(new Element('div', {'title': ticket.assigned_user_name, 'class':"assigned_user", 'style':'background:#'+assigned_user_hash[ticket.assigned_user_name]}));
 			var number = new Element('a', {'href':Bulletin.apiURL+"tickets/"+ticket.number, 'class':'ticket_link', 'title':ticket.number, 'target':'_blank'})
 			number.update("#"+ticket.number)
 			ticketDiv.appendChild(number)
@@ -135,10 +135,10 @@ var Bulletin = Class.create({
 		memberships = memberships.memberships
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
+			membership = membership.membership
 			if(this.assigned_user_hash[membership.name]){
-				membership = membership.membership
 				var avatar = new Element('span')
-				avatar.update(membership.user_id + ":" + "<img src='1'/>")
+				avatar.update(membership.user_id + ":" + "<img src='"+membership.avatar_url"'/>")
 				avatarBar.appendChild(avatar)
 			}
 		})
