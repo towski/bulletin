@@ -124,6 +124,7 @@ var Bulletin = Class.create({
     $('bulletin').cleared = false;
 		$('setup').hide();
 		$('bulletin').show();
+		Bulletin.assigned_user_hash = assigned_user_hash
 	},
 	
 	getMemberships: function(){
@@ -138,8 +139,6 @@ var Bulletin = Class.create({
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
 			membership = membership.membership
-			alert(membership.user.name)
-			alert(Bulletin.assigned_user_hash[membership.user.name])
 			if(Bulletin.assigned_user_hash[membership.user.name] && !alreadyListed[membership.user.name]){
 				var avatar = new Element('span', {'style':'width:80px;float:left'})
 				avatar.update("<img src='http://entp.lighthouseapp.com/"+membership.user.avatar_url+"' title='"+membership.user.name+"' style='float:left;width:40px;height:40px;border:4px solid #"+Bulletin.assigned_user_hash[membership.user.name]+"'/>")
