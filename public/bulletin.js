@@ -132,14 +132,13 @@ var Bulletin = Class.create({
   },
 
 	buildAvatars: function(memberships){
-		globaldata = memberships
 		memberships = memberships.memberships
 		var avatarBar = $('avatarBar')
 		memberships.each(function(membership){
 			membership = membership.membership
-			if(this.assigned_user_hash[membership.name]){
+			if(this.assigned_user_hash[membership.user.name]){
 				var avatar = new Element('span')
-				avatar.update(membership.user_id + ":" + "<img src='"+membership.avatar_url+"'/>")
+				avatar.update(membership.user_id + ":" + "<img src='"+membership.user.avatar_url+"'/>")
 				avatarBar.appendChild(avatar)
 			}
 		})
